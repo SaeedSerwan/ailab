@@ -3,123 +3,115 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AI Lab · College of Computer Studies, UTB</title>
-<meta name="description" content="Hands-on AI and deep learning labs that run on free Kaggle GPUs. One click to open, nothing to install.">
+<title>AI Lab, College of Computer Studies, UTB</title>
+<meta name="description" content="Deep learning notebooks for UTB students. Open them in Kaggle or Google Colab and run them on a free cloud GPU.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
 
-<nav>
-  <div class="wrap">
-    <a class="brand" href="#">AI Lab <span>· UTB Computer Studies</span></a>
-    <a class="link" href="#how">How it works</a>
-    <a class="link" href="#start">Get started</a>
-    <a class="link" href="#labs">Labs</a>
-    <a class="link" href="#faq">Help</a>
-    <a class="btn dark" id="repo-link" href="#" target="_blank" rel="noopener">GitHub</a>
-  </div>
-</nav>
-
-<header class="hero">
-  <div class="wrap">
-    <h1>Train real neural networks on free cloud GPUs, from any laptop.</h1>
-    <p class="lead">Every lab is a ready-made notebook. Click <b>Open in Kaggle</b> and it loads into your own Kaggle workspace with GPU, data and libraries ready. Nothing to install.</p>
-    <a class="btn primary big" href="#start">Start with Lab 00 →</a>
-    <div class="stats">
-      <div><b id="lab-count">8</b>ready-to-run labs</div>
-      <div><b>T4 / P100</b>NVIDIA GPUs</div>
-      <div><b>~30 h</b>free GPU time / student / week</div>
-      <div><b>0</b>installs needed</div>
-    </div>
-  </div>
+<header class="top">
+  <a class="name" href="./">AI Lab</a>
+  <span class="org">College of Computer Studies, University of Technology Bahrain</span>
+  <a class="gh" id="repo-link" href="#">Source on GitHub</a>
 </header>
 
-<section id="how">
-  <div class="wrap">
-    <h2>How it works</h2>
-    <p class="sub">This site hosts the lessons and notebooks. Kaggle runs them. Each student uses their own free Kaggle account, so the university pays nothing for compute and there are no servers to maintain.</p>
-    <div class="flow">
-      <div class="step"><h4>Pick a lab</h4><p>Browse the catalogue below. Notebooks live in the course GitHub repository.</p></div>
-      <div class="step"><h4>Open in Kaggle</h4><p>One click imports a private copy of the notebook into <i>your</i> Kaggle account.</p></div>
-      <div class="step"><h4>Run on a GPU</h4><p>Switch the accelerator on, then press <kbd>Shift</kbd>+<kbd>Enter</kbd> through the cells. Datasets download automatically.</p></div>
-      <div class="step"><h4>Save &amp; submit</h4><p><b>Save Version</b> keeps your work. Share the notebook link (or the <code>.ipynb</code>) with your instructor.</p></div>
-    </div>
-<div class="arch">  GitHub Pages (this site)            GitHub repo                    Kaggle (per student)
-  ┌──────────────────────┐   links   ┌────────────────────┐ import ┌──────────────────────────────┐
-  │ lab catalogue         │ ───────▶ │ notebooks/*.ipynb   │ ─────▶ │ private notebook copy         │
-  │ setup guide · FAQ     │          │ assets/labs.js      │        │ GPU T4×2 / P100 · 12 h/session│
-  └──────────────────────┘           └────────────────────┘        │ Internet → MNIST, CIFAR, …    │
-                                                                   │ /kaggle/working → outputs     │
-                                                                   └──────────────────────────────┘</div>
-  </div>
-</section>
+<main>
+  <section class="intro">
+    <h1>Learn deep learning by running it.</h1>
+    <p class="lede">Eight notebooks, from a first classifier to transfer learning. Each one opens in Kaggle or Google Colab and runs on a free cloud GPU, so there is nothing to install on your laptop.</p>
+  </section>
 
-<section id="start">
-  <div class="wrap two">
-    <div>
-      <h2>Before your first lab</h2>
-      <p class="sub">About 5 minutes, once per semester.</p>
-      <ol class="setup">
-        <li><b>Create a Kaggle account</b><span>Sign up at kaggle.com. Your university email is fine.</span></li>
-        <li><b>Verify your phone number</b><span>Profile → Settings → <i>Phone verification</i>. This is required for GPUs <u>and</u> Internet access. One number per account.</span></li>
-        <li><b>Open Lab 00</b><span>Click <b>Open in Kaggle</b> on the first card below, then click <b>Run All</b>.</span></li>
-        <li><b>Turn on GPU &amp; Internet</b><span>In the notebook's right panel: <i>Settings → Accelerator → GPU T4 x2</i> and <i>Settings → Internet → On</i>.</span></li>
-        <li><b>Check the output</b><span>Lab 00 should print a Tesla GPU and <i>Internet: ON ✅</i>. You're ready.</span></li>
+  <figure class="pad" aria-labelledby="pad-caption">
+    <div class="pad-grid">
+      <canvas id="pad" width="280" height="280" role="img" aria-label="A 28 by 28 grid you can draw on"></canvas>
+      <button type="button" class="link-btn" id="pad-clear">Clear</button>
+    </div>
+    <div class="pad-read">
+      <p id="pad-caption">Draw a digit in the grid. This is where every MNIST lab starts: 28 × 28 squares, each holding a brightness between 0 and 1.</p>
+      <p>The network doesn't see a picture. It reads the rows one after another, as a single line of 784 numbers:</p>
+      <canvas id="strip" width="784" height="1" aria-hidden="true"></canvas>
+      <p class="strip-scale"><span>pixel 0</span><span>pixel 783</span></p>
+      <pre class="vec" id="vec" aria-live="polite"></pre>
+    </div>
+  </figure>
+
+  <section id="run" class="block">
+    <h2>Choose where to run</h2>
+    <div class="switch" role="radiogroup" aria-label="Platform">
+      <button type="button" role="radio" data-platform="kaggle"><i class="dot kaggle"></i>Kaggle</button>
+      <button type="button" role="radio" data-platform="colab"><i class="dot colab"></i>Google Colab</button>
+    </div>
+
+    <div class="setup" data-for="kaggle">
+      <p>Recommended for the course. You get a fixed weekly GPU allowance of about 30 hours, and saved versions keep your outputs.</p>
+      <ol>
+        <li>Sign up at kaggle.com. Your university email is fine.</li>
+        <li>Verify your phone number in your Kaggle account settings. Kaggle only lets verified accounts use a GPU or the Internet.</li>
+        <li>Open lab 0 below. In the notebook's right-hand panel, set <em>Accelerator</em> to <em>GPU T4 x2</em> and switch <em>Internet</em> on.</li>
       </ol>
     </div>
-    <div class="panel">
-      <h4>What Kaggle gives each student (free)</h4>
-      <table>
-        <tr><td>GPU</td><td>NVIDIA Tesla P100 (16 GB) or 2× T4</td></tr>
-        <tr><td>Weekly GPU quota</td><td>about 30 hours (your exact number is shown in your Kaggle settings)</td></tr>
-        <tr><td>Max session</td><td>12 hours; stops after idle time</td></tr>
-        <tr><td>RAM / disk</td><td>~30 GB RAM, 20 GB saved output</td></tr>
-        <tr><td>Pre-installed</td><td>TensorFlow/Keras, PyTorch, scikit-learn, pandas, …</td></tr>
-        <tr><td>Datasets</td><td>MNIST, Fashion-MNIST, CIFAR-10 download in seconds; 400k+ Kaggle datasets via <i>+ Add Input</i></td></tr>
-      </table>
-      <p style="font-size:13.5px;color:var(--muted);margin:14px 0 0">Save quota: keep the accelerator <b>off</b> while reading or editing, and stop the session when you're done.</p>
-    </div>
-  </div>
-</section>
-
-<section id="labs">
-  <div class="wrap">
-    <h2>Labs</h2>
-    <p class="sub">Do them in order the first time. Each one ends with <b>🧪 Try it</b> exercises.</p>
-    <div class="filters" id="filters"></div>
-    <div class="labs" id="lab-grid"></div>
-  </div>
-</section>
-
-<section id="faq">
-  <div class="wrap">
-    <h2>Help</h2>
-    <p class="sub">The problems students hit most often.</p>
-    <details><summary>"Open in Kaggle" asks me to sign in, or shows an error</summary>
-      <p>Sign in to Kaggle first in the same browser, then click the button again. If the import still fails, use <b>.ipynb</b> to download the notebook, then on Kaggle choose <i>Create → New Notebook → File → Import Notebook</i> and upload it.</p></details>
-    <details><summary>The GPU option is greyed out</summary>
-      <p>Your phone number isn't verified yet, or your weekly GPU quota is used up. The quota resets weekly. Labs 00 and 01 run fine on CPU, and the MNIST labs also work on CPU, just more slowly.</p></details>
-    <details><summary>"Could not download the dataset"</summary>
-      <p>Internet is off for that notebook. Open <i>Settings → Internet → On</i> in the right panel and re-run the cell. Kaggle only allows this for phone-verified accounts.</p></details>
-    <details><summary>My session stopped and I lost my variables</summary>
-      <p>Sessions stop after inactivity. Your <b>code</b> is kept as long as you saved a version; just <i>Run All</i> again. Anything you need later (models, CSVs) should be written to <code>/kaggle/working</code>.</p></details>
-    <details><summary>How do I submit my work?</summary>
-      <p>Click <b>Save Version → Save &amp; Run All</b> so outputs are stored. Then either <i>Share</i> the notebook with your instructor's Kaggle username or download it with <i>File → Download Notebook</i> and upload the <code>.ipynb</code> to the LMS, as your instructor specifies.</p></details>
-    <details><summary>Instructors: adding a new lab</summary>
+    <div class="setup" data-for="colab" hidden>
+      <p>The quickest start: just a Google account, no phone verification. GPU time depends on demand and can run out during busy hours.</p>
       <ol>
-        <li>Put the notebook in <code>notebooks/</code> (start it with the same Setup and Loader cells so it works on Kaggle).</li>
-        <li>Add one entry to <code>assets/labs.js</code>. The card and its buttons are generated automatically.</li>
-        <li><i>Optional, most reliable:</i> upload the notebook to Kaggle yourself, attach any datasets, set the accelerator, make it <b>public</b>, and paste its URL into <code>kaggleUrl</code>. The button then becomes <b>Copy &amp; Edit on Kaggle</b>, and the GPU setting and data travel with every copy.</li>
-        <li>For graded challenges with a leaderboard, host a free <b>Kaggle Community Competition</b> and link it from a lab.</li>
-      </ol></details>
-  </div>
-</section>
+        <li>Sign in with any Google account.</li>
+        <li>Open lab 0 below and choose <em>Runtime → Change runtime type → T4 GPU</em>.</li>
+        <li>Before you close the tab, choose <em>File → Save a copy in Drive</em>, or your changes are lost.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="labs" class="block">
+    <div class="labs-head">
+      <h2>Labs</h2>
+      <p class="progress" id="progress"></p>
+    </div>
+    <p class="note">Do them in order the first time. Each one ends with short exercises. Select a title to see what it covers and preview the code.</p>
+    <ol class="labs" id="lab-list"></ol>
+  </section>
+
+  <section id="help" class="block">
+    <h2>When something goes wrong</h2>
+    <dl class="faq">
+      <dt>The notebook says the dataset did not download</dt>
+      <dd>On Kaggle, Internet is switched off for that notebook. Turn it on under <em>Settings</em> in the right-hand panel and run the cell again. Kaggle only allows this for phone-verified accounts.</dd>
+
+      <dt>I can't choose a GPU</dt>
+      <dd>On Kaggle, verify your phone number, or wait for your weekly quota to reset. On Colab, try again later. Labs 0 and 1 don't need a GPU, and the MNIST labs also run on a CPU, just more slowly.</dd>
+
+      <dt>Opening a lab shows an error</dt>
+      <dd>Sign in to Kaggle or Google in the same browser first, then open the lab again. If it still fails, download the notebook and upload it yourself: on Kaggle use <em>File → Import Notebook</em>; on Colab use <em>File → Upload notebook</em>.</dd>
+
+      <dt>My session stopped and my variables are gone</dt>
+      <dd>Idle sessions shut down on both platforms. Your code is safe if you saved it, so run all the cells again. Anything you want to keep, such as a trained model, has to be saved as a file and downloaded.</dd>
+
+      <dt>How do I hand in my work?</dt>
+      <dd>On Kaggle, use <em>Save Version → Save &amp; Run All</em>, then share the notebook with your instructor or download the .ipynb file. On Colab, use <em>File → Download → Download .ipynb</em>. Submit it the way your instructor asks.</dd>
+    </dl>
+
+    <table class="compare">
+      <caption>Kaggle and Colab compared, free tiers</caption>
+      <thead><tr><th scope="col"></th><th scope="col">Kaggle</th><th scope="col">Google Colab</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">GPU</th><td>Tesla P100, or two T4s</td><td>One T4, when available</td></tr>
+        <tr><th scope="row">GPU time</th><td>About 30 hours a week, shown in your settings</td><td>Varies with demand</td></tr>
+        <tr><th scope="row">Account</th><td>Phone verification needed for GPU and Internet</td><td>Any Google account</td></tr>
+        <tr><th scope="row">Your saved files</th><td>Kept with each saved version</td><td>Deleted when the session ends unless saved to Drive</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="teach" class="block">
+    <h2>For instructors</h2>
+    <p>The site has no server. Lessons and notebooks live in a GitHub repository, and every student runs them in their own free Kaggle or Colab account. To add a lab, put the notebook in <code>notebooks/</code> and add one entry to <code>assets/labs.js</code>; its row and buttons appear automatically.</p>
+    <p>For the steadiest experience on Kaggle, publish each lab there yourself with the GPU on and any datasets attached, then paste its address into <code>kaggleUrl</code>. Students then get Kaggle's <em>Copy &amp; Edit</em>, and the settings come with every copy. For graded challenges with a leaderboard, Kaggle Community Competitions are free to host.</p>
+  </section>
+</main>
 
 <footer>
-  <div class="wrap">
-    <span>AI Lab · College of Computer Studies · University of Technology Bahrain</span>
-    <span>Eng. Saeed Serwan Abdulsattar</span>
-  </div>
+  <p>Prepared by Eng. Saeed Serwan Abdulsattar for students of the College of Computer Studies, University of Technology Bahrain.</p>
 </footer>
 
 <script src="assets/labs.js"></script>
